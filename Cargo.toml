@@ -2,7 +2,8 @@
 
 members = [
     "app",
-    "distributions",
     "display",
+    "distributions",
+    "objects",
 ]
 resolver = "2"

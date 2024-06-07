@@ -1,14 +1,38 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+use std::error::Error;
+use probability::prelude::*;
+
+
+trait ProbabilityDistribution {
+    fn generate_random_sample(&self) -> f64;
+    fn generate_random_pair(&self) -> (f64, f64);
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+struct NormalDistribution {
+    mean: f64,
+    std_dev: f64,
+    dist: Gaussian,
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+}
+
+impl NormalDistribution {
+    pub fn new(mean: f64, std_dev: f64) -> Result<NormalDistribution, dyn Error> {
+        if std_dev < 0.0 {
+            return Err("Standard deviation must be a non-negative value".to_string());
+        }
+        let norm_dist = Gaussian::new(mean, std_dev);
+
+
+        Ok( NormalDistribution { mean, std_dev, dist: norm_dist,  } )
+    }
+}
+
+impl ProbabilityDistribution for NormalDistribution {
+    fn generate_random_sample(&self) -> f64 {
+        let mut source = source::default(1911);
+        self.dist.sample(&mut source)
+    }
+
+    fn generate_random_pair(&self) -> (f64, f64) {
+        todo!()
     }
 }

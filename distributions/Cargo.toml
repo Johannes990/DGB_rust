@@ -4,3 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+probability = "0.20.3"
+objects = { path = "../objects" }
