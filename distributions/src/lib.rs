@@ -11,7 +11,6 @@ struct NormalDistribution {
     mean: f64,
     std_dev: f64,
     dist: Gaussian,
-
 }
 
 impl NormalDistribution {
@@ -21,8 +20,7 @@ impl NormalDistribution {
         }
         let norm_dist = Gaussian::new(mean, std_dev);
 
-
-        Ok( NormalDistribution { mean, std_dev, dist: norm_dist,  } )
+        Ok( NormalDistribution { mean, std_dev, dist: norm_dist } )
     }
 }
 
@@ -33,6 +31,10 @@ impl ProbabilityDistribution for NormalDistribution {
     }
 
     fn generate_random_pair(&self) -> (f64, f64) {
-        todo!()
+        let mut source = source::default(3753);
+        let rand1: f64 = self.dist.sample(&mut source);
+        let rand2: f64 = self.dist.sample(&mut source);
+
+        (rand1, rand2)
     }
 }
