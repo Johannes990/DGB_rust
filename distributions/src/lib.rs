@@ -26,7 +26,6 @@ impl ProbabilityDistribution for NormalDistribution {
 
 impl ProbabilityDistribution for BetaDistribution {
     type Source = source::Default;
-
     fn generate_random_sample(&self, source: &mut Self::Source) -> f64 {
         self.dist.sample(source)
     }
