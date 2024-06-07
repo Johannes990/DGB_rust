@@ -1,4 +1,3 @@
-use std::error::Error;
 use probability::distribution::Gaussian;
 
 pub struct NormalDistribution {
@@ -8,7 +7,7 @@ pub struct NormalDistribution {
 }
 
 impl NormalDistribution {
-    pub fn new(mean: f64, std_dev: f64) -> Result<NormalDistribution, dyn Error> {
+    pub fn new(mean: f64, std_dev: f64) -> Result<NormalDistribution, String> {
         if std_dev < 0.0 {
             return Err("Standard deviation must be a non-negative real_valued number.".to_string());
         }

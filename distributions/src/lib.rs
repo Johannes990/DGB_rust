@@ -1,4 +1,5 @@
-use probability::prelude::*;
+use probability::distribution::Sample;
+use probability::source;
 use crate::normal_distribution::NormalDistribution;
 use crate::beta_distribution::BetaDistribution;
 mod normal_distribution;
@@ -6,20 +7,35 @@ mod beta_distribution;
 
 
 trait ProbabilityDistribution {
-    fn generate_random_sample(&self) -> f64;
-    fn generate_random_pair(&self) -> (f64, f64);
+    type Source;
+    fn generate_random_sample(&self, source: &mut Self::Source) -> f64;
+    fn generate_random_pair(&self, source: &mut Self::Source) -> (f64, f64);
 }
 
-impl ProbabilityDistribution for normal_distribution::NormalDistribution {
-    fn generate_random_sample(&self) -> f64 {
-        let mut source = source::default(1911);
-        self.dist.sample(&mut source)
+impl ProbabilityDistribution for NormalDistribution {
+    type Source = source::Default;
+    fn generate_random_sample(&self, source: &mut Self::Source) -> f64 {
+        self.dist.sample(source)
     }
 
-    fn generate_random_pair(&self) -> (f64, f64) {
-        let mut source = source::default(3753);
-        let rand1: f64 = self.dist.sample(&mut source);
-        let rand2: f64 = self.dist.sample(&mut source);
+    fn generate_random_pair(&self, source: &mut Self::Source) -> (f64, f64) {
+        let rand1: f64 = self.generate_random_sample(source);
+        let rand2: f64 = self.generate_random_sample(source);
+
+        (rand1, rand2)
+    }
+}
+
+impl ProbabilityDistribution for BetaDistribution {
+    type Source = source::Default;
+
+    fn generate_random_sample(&self, source: &mut Self::Source) -> f64 {
+        self.dist.sample(source)
+    }
+
+    fn generate_random_pair(&self, source: &mut Self::Source) -> (f64, f64) {
+        let rand1: f64 = self.generate_random_sample(source);
+        let rand2: f64 = self.generate_random_sample(source);
 
         (rand1, rand2)
     }

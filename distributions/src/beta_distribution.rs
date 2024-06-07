@@ -1,6 +1,4 @@
-use std::error::Error;
 use probability::distribution::Beta;
-use probability::source::default;
 
 pub struct BetaDistribution {
     alpha: f64,
@@ -11,7 +9,7 @@ pub struct BetaDistribution {
 }
 
 impl BetaDistribution {
-    pub fn new(alpha: f64, beta: f64, a: f64, b: f64) -> Result<BetaDistribution, dyn Error> {
+    pub fn new(alpha: f64, beta: f64, a: f64, b: f64) -> Result<BetaDistribution, String> {
         if alpha <= 0.0 {
             return Err("Alpha must be a positive real-valued number.".to_string())
         }
