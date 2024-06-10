@@ -13,7 +13,7 @@ impl GaussianDistribution {
         }
         let norm_dist = Gaussian::new(mean, std_dev);
 
-        Ok( GaussianDistribution { mean, std_dev, dist: norm_dist } )
+        Ok( GaussianDistribution{ mean, std_dev, dist: norm_dist })
     }
 
     pub fn dist(&self) -> &Gaussian {

@@ -15,6 +15,6 @@ impl LogNormalDistribution {
 
         let lognorm_dist = Lognormal::new(mu, sigma);
 
-        Ok( LogNormalDistribution{ mu, sigma, dist: lognorm_dist } )
+        Ok( LogNormalDistribution{ mu, sigma, dist: lognorm_dist })
     }
 }

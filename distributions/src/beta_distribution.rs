@@ -21,6 +21,6 @@ impl BetaDistribution {
         }
         let beta_dist = Beta::new(alpha, beta, a, b);
 
-        Ok( BetaDistribution { alpha, beta, a, b, dist: beta_dist } )
+        Ok( BetaDistribution{ alpha, beta, a, b, dist: beta_dist })
     }
 }
