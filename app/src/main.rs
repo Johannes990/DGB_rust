@@ -4,8 +4,6 @@ use macroquad::window::next_frame;
 use display;
 use probability::source::Xorshift128Plus;
 use distributions::beta_distribution::BetaDistribution;
-use distributions::gamma_distribution::GammaDistribution;
-use distributions::gaussian_distribution::GaussianDistribution;
 use distributions::ProbabilityDistribution;
 
 
@@ -28,9 +26,7 @@ async fn main() {
     let mut x_values:Vec<f32> = vec![250.0];
     let seed = util::generate_seed();
     let mut source = Xorshift128Plus::new(seed);
-    let gamma_dist = GammaDistribution::new(1.0, 145.0).expect("Failed to create gamma distribution!");
-    let beta_dist = BetaDistribution::new(1.0, 1.0, 0.0, 500.0).expect("Failed to create beta distribution!");
-    let gaussian_dist = GaussianDistribution::new(250.0, 50.0).expect("Failed to create gaussian distribution!");
+    let beta_dist = BetaDistribution::new(20.0, 20.0, 0.0, 500.0).expect("Failed to create beta distribution!");
 
     loop {
         display::initialize().await;
