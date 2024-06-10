@@ -10,6 +10,7 @@ pub async fn initialize() {
 
 pub async fn draw_circles_from_vec_values(positions: &Vec<f32>) {
     for x_val in positions {
-        draw_circle(*x_val, 250.0, 7.0, BLACK);
+        draw_circle(*x_val, 250.0, 3.0, BLACK);
+        draw_circle(*x_val, 250.0, 1.0, RED);
     }
 }

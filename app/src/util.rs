@@ -1,5 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
+
 pub fn generate_seed() -> [u64; 2] {
     let start = SystemTime::now();
     let since_epoch = start.duration_since(UNIX_EPOCH).expect("Time error");

@@ -3,8 +3,7 @@ use macroquad::input::{is_key_pressed, KeyCode};
 use macroquad::window::next_frame;
 use display;
 use probability::source::Xorshift128Plus;
-use distributions::uniform_distribution::UniformDistribution;
-use distributions::log_normal_distribution::LogNormalDistribution;
+use distributions::beta_distribution::BetaDistribution;
 use distributions::gamma_distribution::GammaDistribution;
 use distributions::gaussian_distribution::GaussianDistribution;
 use distributions::ProbabilityDistribution;
@@ -29,16 +28,15 @@ async fn main() {
     let mut x_values:Vec<f32> = vec![250.0];
     let seed = util::generate_seed();
     let mut source = Xorshift128Plus::new(seed);
-    let uniform_dist = UniformDistribution::new(0.0, 500.0).expect("Failed to create uniform distribution!");
-    let log_norm_dist = LogNormalDistribution::new(3.3, 0.75).expect("Failed to create lognormal distribution!");
     let gamma_dist = GammaDistribution::new(1.0, 145.0).expect("Failed to create gamma distribution!");
+    let beta_dist = BetaDistribution::new(1.0, 1.0, 0.0, 500.0).expect("Failed to create beta distribution!");
     let gaussian_dist = GaussianDistribution::new(250.0, 50.0).expect("Failed to create gaussian distribution!");
 
     loop {
         display::initialize().await;
 
         if is_key_pressed(KeyCode::A) {
-            let random = gaussian_dist.generate_random_sample(&mut source);
+            let random = beta_dist.generate_random_sample(&mut source);
             println!("Random number {} generated", random);
             x_values.push(random as f32);
         }
