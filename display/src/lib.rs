@@ -1,3 +1,5 @@
+use macroquad::prelude::*;
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
