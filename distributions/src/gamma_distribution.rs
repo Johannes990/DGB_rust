@@ -16,6 +16,6 @@ impl GammaDistribution {
         }
         let gamma = Gamma::new(k, theta);
 
-        Ok( GammaDistribution { k, theta, dist: gamma })
+        Ok( GammaDistribution { k, theta, dist: gamma } )
     }
 }

@@ -10,7 +10,7 @@ mod beta_distribution;
 mod uniform_distribution;
 mod exponential_distribution;
 mod gamma_distribution;
-// gamma
+mod lognormal_distribution;
 // lognormal
 // cauchy
 

@@ -13,6 +13,6 @@ impl UniformDistribution {
         }
         let uniform = Uniform::new(a, b);
 
-        Ok( UniformDistribution { a, b, dist: uniform })
+        Ok( UniformDistribution { a, b, dist: uniform } )
     }
 }

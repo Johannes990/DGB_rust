@@ -12,6 +12,6 @@ impl ExponentialDistribution {
         }
         let exp = Exponential::new(lambda);
 
-        Ok( ExponentialDistribution { lambda, dist: exp})
+        Ok( ExponentialDistribution { lambda, dist: exp } )
     }
 }
