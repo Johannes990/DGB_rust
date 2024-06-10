@@ -2,17 +2,19 @@ use probability::distribution::Sample;
 use probability::source;
 use crate::gaussian_distribution::GaussianDistribution;
 use crate::beta_distribution::BetaDistribution;
+use crate::cauchy_distribution::CauchyDistribution;
 use crate::exponential_distribution::ExponentialDistribution;
 use crate::gamma_distribution::GammaDistribution;
-use crate::lognormal_distribution::LogNormalDistribution;
+use crate::log_normal_distribution::LogNormalDistribution;
 use crate::uniform_distribution::UniformDistribution;
 mod gaussian_distribution;
 mod beta_distribution;
 mod uniform_distribution;
 mod exponential_distribution;
 mod gamma_distribution;
-mod lognormal_distribution;
-// cauchy
+mod log_normal_distribution;
+mod cauchy_distribution;
+
 
 
 trait ProbabilityDistribution {
@@ -64,6 +66,14 @@ impl ProbabilityDistribution for GammaDistribution {
 }
 
 impl ProbabilityDistribution for LogNormalDistribution {
+    type Source = source::Default;
+
+    fn generate_random_sample(&self, source: &mut Self::Source) -> f64 {
+        self.dist.sample(source)
+    }
+}
+
+impl ProbabilityDistribution for CauchyDistribution {
     type Source = source::Default;
 
     fn generate_random_sample(&self, source: &mut Self::Source) -> f64 {
