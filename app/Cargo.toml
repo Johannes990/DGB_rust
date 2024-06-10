@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+probability = "0.20.3"
 macroquad = "0.4.8"
 distributions = { path = "../distributions" }
 display = { path = "../display" }
+

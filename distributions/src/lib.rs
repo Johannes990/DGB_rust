@@ -7,17 +7,16 @@ use crate::exponential_distribution::ExponentialDistribution;
 use crate::gamma_distribution::GammaDistribution;
 use crate::log_normal_distribution::LogNormalDistribution;
 use crate::uniform_distribution::UniformDistribution;
-mod gaussian_distribution;
-mod beta_distribution;
-mod uniform_distribution;
-mod exponential_distribution;
-mod gamma_distribution;
-mod log_normal_distribution;
-mod cauchy_distribution;
+pub mod gaussian_distribution;
+pub mod beta_distribution;
+pub mod uniform_distribution;
+pub mod exponential_distribution;
+pub mod gamma_distribution;
+pub mod log_normal_distribution;
+pub mod cauchy_distribution;
 
 
-
-trait ProbabilityDistribution {
+pub trait ProbabilityDistribution {
     type Source;
     fn generate_random_sample(&self, source: &mut Self::Source) -> f64;
     fn generate_random_pair(&self, source: &mut Self::Source) -> (f64, f64) {

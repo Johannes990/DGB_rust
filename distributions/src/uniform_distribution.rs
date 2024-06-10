@@ -8,8 +8,8 @@ pub struct UniformDistribution {
 
 impl UniformDistribution {
     pub fn new(a: f64, b: f64) -> Result<UniformDistribution, String> {
-        if a < b {
-            return Err("a must be greater than b.".to_string())
+        if a >= b {
+            return Err("A must be smaller than b.".to_string())
         }
         let uniform = Uniform::new(a, b);
 

@@ -1,16 +1,15 @@
 use macroquad::prelude::*;
 
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+
+pub async fn initialize() {
+    let y_half = screen_height() / 2.0;
+
+    clear_background(LIGHTGRAY);
+    draw_line(0.0, y_half, screen_width(), y_half, 1.0, BLACK);
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+pub async fn draw_circles_from_vec_values(positions: &Vec<f32>) {
+    for x_val in positions {
+        draw_circle(*x_val, 250.0, 7.0, BLACK);
     }
 }
