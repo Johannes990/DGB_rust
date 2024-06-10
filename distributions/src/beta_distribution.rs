@@ -16,8 +16,8 @@ impl BetaDistribution {
         if beta <= 0.0 {
             return Err("Beta must be a positive real-valued number.".to_string())
         }
-        if a < b {
-            return Err("a must be greater than b.".to_string())
+        if a >= b {
+            return Err("B must be greater than a.".to_string())
         }
         let beta_dist = Beta::new(alpha, beta, a, b);
 
