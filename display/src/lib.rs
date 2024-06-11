@@ -1,4 +1,4 @@
-mod histrogram;
+pub mod histogram;
 use macroquad::prelude::*;
 
 

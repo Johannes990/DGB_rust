@@ -1,6 +1,7 @@
 use macroquad::input::{is_key_pressed, KeyCode};
 use macroquad::window::next_frame;
 use display;
+use display::histogram;
 use probability::source::Xorshift128Plus;
 use distributions::beta_distribution::BetaDistribution;
 use distributions::ProbabilityDistribution;
@@ -27,6 +28,8 @@ async fn main() {
     let seed = generate_seed();
     let mut source = Xorshift128Plus::new(seed);
     let beta_dist = BetaDistribution::new(20.0, 20.0, 0.0, 500.0).expect("Failed to create beta distribution!");
+    let mut histogram = histogram::Histogram::new(5, 0, 400, 500, 500, 0, 500, 0, 500).unwrap();
+
 
     loop {
         display::initialize().await;
@@ -35,8 +38,10 @@ async fn main() {
             let random = beta_dist.generate_random_sample(&mut source);
             println!("Random number {} generated", random);
             x_values.push(random as f32);
+            histogram.add_value(random as f32);
         }
         display::draw_circles_from_vec_values(&x_values).await;
+        histogram.print_bins();
 
         next_frame().await
     }

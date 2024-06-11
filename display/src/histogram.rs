@@ -60,15 +60,21 @@ impl Histogram {
             self.out_range_end
         );
         let hist_width = self.scr_x_end - self.scr_x_start;
-        let bin_width = hist_width / self.n_bins as f32;
-        let mut hist_bin_pos = (shifted_val.expect("Error shifting value to new range!") / bin_width).floor();
+        let bin_width = hist_width / self.n_bins;
+        let mut hist_bin_pos = (shifted_val.expect("Error shifting value to new range!") / bin_width as f32).floor() as u32;
 
-        if hist_bin_pos == self.n_bins as f32 {
-            hist_bin_pos -= 1.0;
+        if hist_bin_pos == self.n_bins {
+            hist_bin_pos -= 1;
         }
 
         self.total_samples += 1;
-        let old_bin_count = self.sample_bins.get(hist_bin_pos);
+        let old_bin_count = self.sample_bins.get(&hist_bin_pos).unwrap();
         self.sample_bins.insert(hist_bin_pos, old_bin_count + 1);
+    }
+
+    pub fn print_bins(&self) {
+        for i in self.sample_bins.keys() {
+            println!("sample bin {} has {} values", i, self.sample_bins.get(i).unwrap())
+        }
     }
 }
