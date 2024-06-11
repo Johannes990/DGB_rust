@@ -1,10 +1,10 @@
-mod util;
 use macroquad::input::{is_key_pressed, KeyCode};
 use macroquad::window::next_frame;
 use display;
 use probability::source::Xorshift128Plus;
 use distributions::beta_distribution::BetaDistribution;
 use distributions::ProbabilityDistribution;
+use utilities::generate_seed;
 
 
 fn window_conf() -> macroquad::prelude::Conf {
@@ -24,7 +24,7 @@ fn window_conf() -> macroquad::prelude::Conf {
 #[macroquad::main(window_conf)]
 async fn main() {
     let mut x_values:Vec<f32> = vec![250.0];
-    let seed = util::generate_seed();
+    let seed = generate_seed();
     let mut source = Xorshift128Plus::new(seed);
     let beta_dist = BetaDistribution::new(20.0, 20.0, 0.0, 500.0).expect("Failed to create beta distribution!");
 
