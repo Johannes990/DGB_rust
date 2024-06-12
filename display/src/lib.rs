@@ -1,5 +1,5 @@
-pub mod histogram;
-pub mod start_page;
+mod histogram;
+mod start_page;
 mod display_context;
 mod first_page;
 mod second_page;
@@ -10,7 +10,7 @@ use display_context::{DisplayContext, DisplayWindow};
 
 pub async fn run() {
     let mut current_display = DisplayContext::new().unwrap();
-
+    let arial_font = load_ttf_font("assets/fonts/arial/arial.ttf").await.unwrap();
 
     loop {
         let current_window = current_display.get_window();
@@ -32,7 +32,7 @@ pub async fn run() {
                 }
             },
             DisplayWindow::FirstPage => {
-                if let Some(first_page_element) = first_page::show_page().await {
+                if let Some(first_page_element) = first_page::show_page(&arial_font).await {
                     match first_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from page one...");
