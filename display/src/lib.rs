@@ -3,7 +3,7 @@ pub mod start_page;
 mod display_context;
 mod first_page;
 mod second_page;
-
+mod elements;
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};
 
