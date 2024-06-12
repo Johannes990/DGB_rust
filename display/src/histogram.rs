@@ -18,7 +18,9 @@ pub struct Histogram {
     width: f32,
     height: f32,
     bin_width: f32,
-    bin_padding: f32
+    bin_padding: f32,
+    background_color: Color,
+    bin_color: Color
 }
 
 impl Histogram {
@@ -30,7 +32,9 @@ impl Histogram {
                in_range_start: u32,
                in_range_end: u32,
                out_range_start: u32,
-               out_range_end: u32) -> Result<Histogram, String> {
+               out_range_end: u32,
+               background_color: Color,
+               bin_color: Color) -> Result<Histogram, String> {
         if bin_count <= 0 {
             return Err("n_bins must be a positive integer!".to_string())
         }
@@ -55,7 +59,9 @@ impl Histogram {
             width: scr_x_end - scr_x_start,
             height: scr_y_end - scr_y_start,
             bin_width: (scr_x_end - scr_x_start) / bin_count as f32,
-            bin_padding: 3.0
+            bin_padding: 3.0,
+            background_color,
+            bin_color
         })
     }
 
@@ -90,7 +96,7 @@ impl Histogram {
             self.scr_y_start,
             self.width,
             self.height,
-            BLACK
+            self.background_color
         );
 
         if self.total_samples == 0 {
@@ -103,7 +109,7 @@ impl Histogram {
             let bin_start_x = (self.bin_width * bin_idx as f32) + self.bin_padding;
             let bin_end_x = bin_start_x + self.bin_width - (2.0 * self.bin_padding);
             let bin_start_y = self.scr_y_end - (bin_max_height * bin_rel_height);
-            draw_rectangle(bin_start_x, bin_start_y, bin_end_x - bin_start_x, self.scr_y_end - bin_start_y, BLUE);
+            draw_rectangle(bin_start_x, bin_start_y, bin_end_x - bin_start_x, self.scr_y_end - bin_start_y, self.bin_color);
         }
     }
 }

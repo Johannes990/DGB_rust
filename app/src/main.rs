@@ -1,9 +1,10 @@
+use macroquad::color::{RED, YELLOW};
 use macroquad::input::{is_key_pressed, KeyCode};
 use macroquad::window::next_frame;
 use display;
-use display::histogram;
+use display::histogram::Histogram;
 use probability::source::Xorshift128Plus;
-use distributions::beta_distribution::BetaDistribution;
+use distributions::gaussian_distribution::GaussianDistribution;
 use distributions::ProbabilityDistribution;
 use utilities::generate_seed;
 
@@ -27,9 +28,20 @@ async fn main() {
     let mut x_values:Vec<f32> = vec![250.0];
     let seed = generate_seed();
     let mut source = Xorshift128Plus::new(seed);
-    let beta_dist = BetaDistribution::new(1.0, 1.0, 0.0, 500.0).expect("Failed to create beta distribution!");
-    let mut histogram = histogram::Histogram::new(5, 0.0, 400.0, 500.0, 500.0, 0, 500, 0, 500).unwrap();
-
+    let beta_dist = GaussianDistribution::new(250.0, 77.0).expect("Failed to create beta distribution!");
+    let mut histogram = Histogram::new(
+        20,
+        0.0,
+        400.0,
+        500.0,
+        500.0,
+        0,
+        500,
+        0,
+        500,
+        YELLOW,
+        RED
+    ).unwrap();
 
     loop {
         display::initialize().await;
