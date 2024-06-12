@@ -20,9 +20,22 @@ pub fn shift_f32_to_range(
         return Err("Initial range start value must be lower than initial range end value.".to_string())
     }
 
+    let initial_range_start = initial_range_start as f32;
+    let initial_range_end = initial_range_end as f32;
+    let final_range_start = final_range_start as f32;
+    let final_range_end = final_range_end as f32;
+
+    if sample < initial_range_start {
+        return Ok(final_range_start);
+    } else if sample > initial_range_end {
+        return Ok(final_range_end);
+    }
+
     let initial_range = initial_range_end - initial_range_start;
     let final_range = final_range_end - final_range_start;
-    let rel_pos = sample / initial_range as f32;
+    let rel_pos = (sample - initial_range_start) / initial_range;
+    let shifted_value = final_range_start + rel_pos * final_range;
+    println!("Shifted {} to a new value of {}", sample, shifted_value);
 
-    Ok((rel_pos * final_range as f32) + final_range_start as f32)
+    Ok(shifted_value)
 }
