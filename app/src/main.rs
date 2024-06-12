@@ -27,8 +27,8 @@ async fn main() {
     let mut x_values:Vec<f32> = vec![250.0];
     let seed = generate_seed();
     let mut source = Xorshift128Plus::new(seed);
-    let beta_dist = BetaDistribution::new(20.0, 20.0, 0.0, 500.0).expect("Failed to create beta distribution!");
-    let mut histogram = histogram::Histogram::new(5, 0, 400, 500, 500, 0, 500, 0, 500).unwrap();
+    let beta_dist = BetaDistribution::new(1.0, 1.0, 0.0, 500.0).expect("Failed to create beta distribution!");
+    let mut histogram = histogram::Histogram::new(5, 0.0, 400.0, 500.0, 500.0, 0, 500, 0, 500).unwrap();
 
 
     loop {
@@ -42,6 +42,7 @@ async fn main() {
         }
         display::draw_circles_from_vec_values(&x_values).await;
         histogram.print_bins();
+        histogram.show().await;
 
         next_frame().await
     }
