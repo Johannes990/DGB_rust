@@ -1,14 +1,62 @@
 pub mod histogram;
+pub mod start_page;
+mod display_context;
+mod first_page;
+mod second_page;
+
 use macroquad::prelude::*;
+use display_context::{DisplayContext, DisplayWindow};
 
 
-pub async fn initialize() {
-    let y_half = screen_height() / 2.0;
-    let x_half = screen_width() / 2.0;
+pub async fn run() {
+    let mut current_display = DisplayContext::new().unwrap();
 
-    clear_background(LIGHTGRAY);
-    draw_line(0.0, y_half, screen_width(), y_half, 1.0, BLACK);
-    draw_line(x_half, 225.0, x_half, 275.0, 1.0, BLACK);
+
+    loop {
+        let current_window = current_display.get_window();
+
+        match current_window {
+            DisplayWindow::StartingPage => {
+                if let Some(start_page_element) = start_page::show_page().await {
+                    match start_page_element {
+                        1 => {
+                            println!("Mouse selected BUTTON 1...");
+                            current_display.switch_window(DisplayWindow::FirstPage);
+                        },
+                        2 => {
+                            println!("Mouse selected BUTTON 2...");
+                            current_display.switch_window(DisplayWindow::SecondPage);
+                        },
+                        _ => {},
+                    }
+                }
+            },
+            DisplayWindow::FirstPage => {
+                if let Some(first_page_element) = first_page::show_page().await {
+                    match first_page_element {
+                        1 => {
+                            println!("BACK BUTTON pressed from page one...");
+                            current_display.switch_window(DisplayWindow::StartingPage);
+                        },
+                        _ => {},
+                    }
+                }
+            },
+            DisplayWindow::SecondPage => {
+                if let Some(second_page_element) = second_page::show_page().await {
+                    match second_page_element {
+                        1 => {
+                            println!("BACK BUTTON pressed from page two...");
+                            current_display.switch_window(DisplayWindow::StartingPage);
+                        },
+                        _ => {},
+                    }
+                }
+            },
+        }
+
+        next_frame().await;
+    }
 }
 
 pub async fn draw_circles_from_vec_values(positions: &Vec<f32>) {
