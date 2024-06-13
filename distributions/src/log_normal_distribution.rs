@@ -1,6 +1,5 @@
 use probability::distribution::Lognormal;
 
-
 pub struct LogNormalDistribution {
     mu: f64,
     sigma: f64,

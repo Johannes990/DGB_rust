@@ -1,6 +1,5 @@
 use probability::distribution::Cauchy;
 
-
 pub struct CauchyDistribution {
     x_0: f64,
     gamma: f64,

@@ -1,6 +1,5 @@
 use display;
 
-
 fn window_conf() -> macroquad::prelude::Conf {
     macroquad::prelude::Conf {
         window_title: "Dynamic Graph Builder".to_owned(),

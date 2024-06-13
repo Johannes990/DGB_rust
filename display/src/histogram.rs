@@ -2,7 +2,6 @@ use macroquad::prelude::*;
 use std::collections::HashMap;
 use utilities::shift_f32_to_range;
 
-
 pub struct Histogram {
     bin_count: u32,
     total_samples: u32,

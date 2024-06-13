@@ -8,7 +8,6 @@ mod quit_page;
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};
 
-
 pub async fn run() {
     let mut current_display = DisplayContext::new().unwrap();
     let arial_font = load_ttf_font("assets/fonts/arial/arial.ttf").await.unwrap();

@@ -1,6 +1,5 @@
 use macroquad::prelude::*;
 
-
 pub struct Button {
     pub x: f32,
     pub y: f32,
@@ -30,6 +29,7 @@ impl Button {
         let text_dims = measure_text(&self.label, None, self.font_size as u16, 1.0);
         let text_x = self.x +(self.width / 2.0) - (text_dims.width / 2.0);
         let text_y = self.y + (self.height / 2.0) + (text_dims.height / 2.0);
+
         draw_rectangle(self.x, self.y, self.width, self.height, self.background_color);
         draw_text(&self.label, text_x, text_y, self.font_size, self.text_color);
     }

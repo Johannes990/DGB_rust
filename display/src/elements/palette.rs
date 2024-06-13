@@ -1,6 +1,5 @@
 use macroquad::color::Color;
 
-
 pub const GENERAL_BACKGROUND: Color = Color { r: 0.0196, g: 0.01568,b: 0.12941, a: 1.0};
 pub const QUIT_DIALOG_BACKGROUND: Color = Color { r: 0.0196, g: 0.01568, b: 0.12941, a: 1.0};
 pub const START_PAGE_BUTTON: Color = Color { r: 0.99607, g: 0.66666, b: 0.69803, a: 1.0};

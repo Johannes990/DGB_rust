@@ -2,7 +2,6 @@ use macroquad::prelude::*;
 use crate::elements::button::Button;
 use crate::elements::palette;
 
-
 pub async fn show_page(font: &Font) -> Option<u8> {
     let scr_h = screen_height();
     let scr_w = screen_width();

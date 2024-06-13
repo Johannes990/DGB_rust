@@ -15,7 +15,6 @@ pub mod gamma_distribution;
 pub mod log_normal_distribution;
 pub mod cauchy_distribution;
 
-
 pub trait ProbabilityDistribution {
     type Source;
     fn generate_random_sample(&self, source: &mut Self::Source) -> f64;
