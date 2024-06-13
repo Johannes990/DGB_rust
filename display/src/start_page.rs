@@ -10,9 +10,9 @@ pub async fn show_page() -> Option<u8> {
     let button_w_pad = 1.5 * scr_w / 4.0;
     let button_h_pad = (scr_h / 2.0) - 2.5 * button_h;
 
-    let page_1_button = Button::new(button_w_pad, button_h_pad, button_w, button_h, palette::START_PAGE_BUTTON, "PAGE 1", BLACK, 30.0);
-    let options_page_button = Button::new(button_w_pad, button_h_pad + 2.0 * button_h, button_w, button_h, palette::START_PAGE_BUTTON, "OPTIONS", BLACK, 30.0);
-    let quit_button = Button::new(button_w_pad, button_h_pad + 4.0 * button_h, button_w, button_h, palette::QUIT_DIALOG_BUTTON, "QUIT", BLACK, 30.0);
+    let page_1_button = Button::new(button_w_pad, button_h_pad, button_w, button_h, palette::START_PAGE_BUTTON, "PAGE 1", BLACK, 25.0);
+    let options_page_button = Button::new(button_w_pad, button_h_pad + 2.0 * button_h, button_w, button_h, palette::START_PAGE_BUTTON, "OPTIONS", BLACK, 25.0);
+    let quit_button = Button::new(button_w_pad, button_h_pad + 4.0 * button_h, button_w, button_h, palette::QUIT_DIALOG_BUTTON, "QUIT", BLACK, 25.0);
 
     clear_background(palette::GENERAL_BACKGROUND);
 

@@ -35,8 +35,7 @@ impl Button {
     }
 
     pub fn is_pressed(&self) -> bool {
-        let mouse_x = mouse_position().0;
-        let mouse_y = mouse_position().1;
+        let (mouse_x, mouse_y) = mouse_position();
 
         is_mouse_button_pressed(MouseButton::Left)
             && mouse_x >= self.x
