@@ -2,7 +2,7 @@ mod histogram;
 mod start_page;
 mod display_context;
 mod first_page;
-mod second_page;
+mod options_page;
 mod elements;
 mod quit_page;
 use macroquad::prelude::*;
@@ -27,12 +27,12 @@ pub async fn run() {
                             current_display.set_previous_window(Option::from(DisplayWindow::StartingPage));
                         },
                         2 => {
-                            println!("Mouse selected BUTTON 2...");
-                            current_display.set_current_window(DisplayWindow::SecondPage);
+                            println!("Options page selected...");
+                            current_display.set_current_window(DisplayWindow::OptionsPage);
                             current_display.set_previous_window(Option::from(DisplayWindow::StartingPage));
                         },
                         255 => {
-                            println!("Mouse selected QUIT dialog...");
+                            println!("QUIT dialog page selected...");
                             current_display.set_current_window(DisplayWindow::QuitDialogPage);
                             current_display.set_previous_window(Option::from(DisplayWindow::StartingPage));
                         },
@@ -57,18 +57,18 @@ pub async fn run() {
                     }
                 }
             },
-            DisplayWindow::SecondPage => {
-                if let Some(second_page_element) = second_page::show_page().await {
+            DisplayWindow::OptionsPage => {
+                if let Some(second_page_element) = options_page::show_page().await {
                     match second_page_element {
                         1 => {
-                            println!("BACK BUTTON pressed from page two...");
+                            println!("BACK BUTTON pressed from options page...");
                             current_display.set_current_window(DisplayWindow::StartingPage);
-                            current_display.set_previous_window(Option::from(DisplayWindow::SecondPage));
+                            current_display.set_previous_window(Option::from(DisplayWindow::OptionsPage));
                         },
                         255 => {
-                            println!("QUIT BUTTON pressed from page two...");
+                            println!("QUIT BUTTON pressed from options page...");
                             current_display.set_current_window(DisplayWindow::QuitDialogPage);
-                            current_display.set_previous_window(Option::from(DisplayWindow::SecondPage));
+                            current_display.set_previous_window(Option::from(DisplayWindow::OptionsPage));
                         }
                         _ => {},
                     }

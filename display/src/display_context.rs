@@ -7,7 +7,7 @@ pub struct DisplayContext {
 pub enum DisplayWindow {
     StartingPage,
     FirstPage,
-    SecondPage,
+    OptionsPage,
     QuitDialogPage,
 }
 
