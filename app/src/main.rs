@@ -1,3 +1,5 @@
+mod settings;
+
 use display;
 
 fn window_conf() -> macroquad::prelude::Conf {
