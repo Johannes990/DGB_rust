@@ -8,3 +8,4 @@ macroquad = "0.4.8"
 egui = "0.12.0"
 distributions = { path = "../distributions" }
 utilities = { path = "../utilities" }
+settings = { path = "../settings" }

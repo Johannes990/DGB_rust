@@ -9,3 +9,5 @@ macroquad = "0.4.8"
 distributions = { path = "../distributions" }
 display = { path = "../display" }
 utilities = { path = "../utilities" }
+settings = { path = "../settings" }
+env_logger = "0.11.3"

@@ -7,11 +7,12 @@ mod elements;
 mod quit_page;
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};
+use settings::distribution_settings::DistributionSettings;
 
 pub async fn run() {
     let mut current_display = DisplayContext::new().unwrap();
-    let arial_font = load_ttf_font("assets/fonts/arial/arial.ttf").await.unwrap();
-    let mut user_exit_requested = false;
+    let user_exit_requested = false;
+    let mut settings_state = DistributionSettings::new();
 
     loop {
         let current_window = current_display.get_current_window();
@@ -40,7 +41,7 @@ pub async fn run() {
                 }
             },
             DisplayWindow::FirstPage => {
-                if let Some(first_page_element) = first_page::show_page(&arial_font).await {
+                if let Some(first_page_element) = first_page::show_page(&settings_state).await {
                     match first_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from page one...");
@@ -57,7 +58,7 @@ pub async fn run() {
                 }
             },
             DisplayWindow::OptionsPage => {
-                if let Some(second_page_element) = options_page::show_page().await {
+                if let Some(second_page_element) = options_page::show_page(&mut settings_state).await {
                     match second_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from options page...");
