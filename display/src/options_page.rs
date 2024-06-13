@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 use crate::elements::button::Button;
 use crate::elements::palette;
-use egui::;
+
 
 pub async fn show_page() -> Option<u8> {
     let scr_h = screen_height();
@@ -19,7 +19,7 @@ pub async fn show_page() -> Option<u8> {
     quit_button.draw();
 
     // settings menu display here
-    let mut egui
+
 
     if back_button.is_pressed() {
         return Some(1);
