@@ -1,4 +1,5 @@
 use std::fmt::Debug;
+use egui::CursorIcon::Default;
 use macroquad::prelude::*;
 
 
@@ -30,12 +31,27 @@ impl<'a> Slider<'a> {
     pub fn draw(&self) {
         match self.slider_type {
             SliderType::Horizontal => {
+                // slider heading
+                draw_text_ex(&self.label, self.x, self.y - self.height / 2.0, self.text_params.clone());
                 //track
                 draw_rectangle(self.x, self.y + self.height / 2.0 - 2.0, self.width, 4.0, DARKGRAY);
                 // Draw the slider knob
                 let knob_x = self.x + (self.current_value - self.min_value) / (self.max_value - self.min_value) * self.width;
                 draw_rectangle(knob_x - self.height / 2.0, self.y, self.height, self.height, BLUE);
-                draw_text_ex(&self.label, self.x, self.y - self.height / 2.0, self.text_params.clone());
+                // draw value field
+                draw_rectangle(self.x + self.width + 16.0, self.y - 2.0, 50.0, self.height + 4.0, WHITE);
+                let current_value_string = format!("{:.3}", self.current_value);
+                draw_text_ex(&current_value_string,
+                             self.x + self.width + 22.0,
+                             self.y + self.height * 0.75,
+                             TextParams {
+                                 font: self.text_params.font,
+                                 font_size: 16,
+                                 font_scale: 1.0,
+                                 font_scale_aspect: 1.0,
+                                 rotation: 0.0,
+                                 color: BLACK
+                             });
             },
             SliderType::Vertical => {
                 todo!()
