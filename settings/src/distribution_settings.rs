@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct DistributionSettings {
     pub x_axis_distribution: DistributionType,
     pub x_axis_distribution_var_1: Option<f32>,

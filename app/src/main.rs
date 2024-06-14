@@ -1,3 +1,5 @@
+mod distribution_loader;
+use settings::distribution_settings::DistributionSettings;
 use display;
 
 fn window_conf() -> macroquad::prelude::Conf {

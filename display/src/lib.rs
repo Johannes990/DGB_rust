@@ -14,7 +14,7 @@ use crate::elements::slider::{Slider, SliderType};
 
 pub async fn run() {
     let mut current_display = DisplayContext::new().unwrap();
-    let mut settings_state = DistributionSettings::new();
+    let mut distribution_settings = DistributionSettings::new();
     let user_exit_requested = false;
 
     let font = load_ttf_font("C:\\Users\\johan\\RustroverProjects\\DGB_rust\\assets\\fonts\\open_sans\\OpenSans_Medium.ttf").await.unwrap();
@@ -57,7 +57,7 @@ pub async fn run() {
                 }
             },
             DisplayWindow::FirstPage => {
-                if let Some(first_page_element) = first_page::show_page(&button_text_params, &settings_state).await {
+                if let Some(first_page_element) = first_page::show_page(&button_text_params, &distribution_settings.clone()).await {
                     match first_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from page one...");
@@ -76,7 +76,7 @@ pub async fn run() {
             DisplayWindow::OptionsPage => {
                 if let Some(second_page_element) = options_page::show_page(&button_text_params,
                                                                            &option_text_params,
-                                                                           &mut settings_state,
+                                                                           &mut distribution_settings,
                                                                            &mut slider_x1,
                                                                            &mut slider_y1,
                                                                            &mut slider_x2,

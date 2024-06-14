@@ -44,8 +44,8 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
     ];
 
     for (distribution_type, name) in distributions.iter() {
-        let selected = settings_state.x_axis_distribution == *distribution_type;
-        if draw_checkbox(selected, name, "X", 20.0, y1, settings_text_params) {
+        let selected_x = settings_state.x_axis_distribution == *distribution_type;
+        if draw_checkbox(&selected_x, name,  "X", 20.0, y1, settings_text_params.clone()) {
             settings_state.x_axis_distribution = distribution_type.clone();
         }
         y1 += 30.0;
@@ -54,8 +54,8 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
     y1 = 110.0;
     draw_text_ex("Y-axis", 180.0, 90.0, settings_text_params.clone());
     for (distribution_type, name) in distributions.iter() {
-        let selected = settings_state.y_axis_distribution == *distribution_type;
-        if draw_checkbox(selected, name, "Y", 180.0, y1, settings_text_params) {
+        let selected_y = settings_state.y_axis_distribution == *distribution_type;
+        if draw_checkbox(&selected_y, name, "Y", 180.0, y1, settings_text_params.clone()) {
             settings_state.y_axis_distribution = distribution_type.clone();
         }
         y1 += 30.0;
@@ -89,23 +89,23 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
     None
 }
 
-fn draw_checkbox<'a>(selected: bool, label: &str, axis: &str, x: f32, y: f32, text_params: &TextParams<'a>) -> bool {
+fn draw_checkbox<'a>(selected: &bool, label: &str, axis: &str, x: f32, y: f32, text_params: TextParams) -> bool {
     let size = 20.0;
     let (mouse_x, mouse_y) = mouse_position();
     let clicked = is_mouse_button_pressed(MouseButton::Left);
-    let mut is_selected = selected;
 
+    draw_text_ex(label, x + size + 10.0, y + size - 5.0, text_params.clone());
     draw_rectangle(x, y, size, size, WHITE);
-    if is_selected {
+    if *selected {
         draw_rectangle(x + 3.0, y + 3.0, size - 6.0, size - 6.0, RED);
     }
 
-    draw_text_ex(label, x + size + 10.0, y + size - 5.0, text_params.clone());
-
     if clicked && mouse_x >= x && mouse_x <= x + size && mouse_y >= y && mouse_y <= y + size {
-        is_selected = !is_selected;
         println!("{}-axis distribution selected: {}", axis, label);
+        println!("selected was {}", selected.to_string());
+        selected != selected;
+        println!("selected now is {}", selected.to_string());
     }
 
-    is_selected
+    *selected
 }
