@@ -21,10 +21,14 @@ pub async fn run() {
     let button_text_params = TextParams { font: Some(&font), font_size: 20, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_BUTTON };
     let option_text_params = TextParams { font: Some(&font), font_size: 18, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_OPTIONS };
 
-    let mut slider_x = Slider::new(25.0, 370.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 1", &option_text_params);
-    let mut slider_y = Slider::new(185.0, 370.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 1", &option_text_params);
-    let mut slider_x_val = slider_x.current_value;
-    let mut slider_y_val = slider_y.current_value;
+    let mut slider_x1 = Slider::new(25.0, 350.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 1", &option_text_params);
+    let mut slider_y1 = Slider::new(185.0, 350.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 1", &option_text_params);
+    let mut slider_x2 = Slider::new(25.0, 410.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 2", &option_text_params);
+    let mut slider_y2 = Slider::new(185.0, 410.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 2", &option_text_params);
+    let mut slider_x3 = Slider::new(25.0, 470.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 3", &option_text_params);
+    let mut slider_y3 = Slider::new(185.0, 470.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 3", &option_text_params);
+    let mut slider_x4 = Slider::new(25.0, 530.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 4", &option_text_params);
+    let mut slider_y4 = Slider::new(185.0, 530.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 4", &option_text_params);
 
     loop {
         let current_window = current_display.get_current_window();
@@ -73,8 +77,14 @@ pub async fn run() {
                 if let Some(second_page_element) = options_page::show_page(&button_text_params,
                                                                            &option_text_params,
                                                                            &mut settings_state,
-                                                                           &mut slider_x,
-                                                                           &mut slider_y).await {
+                                                                           &mut slider_x1,
+                                                                           &mut slider_y1,
+                                                                           &mut slider_x2,
+                                                                           &mut slider_y2,
+                                                                           &mut slider_x3,
+                                                                           &mut slider_y3,
+                                                                           &mut slider_x4,
+                                                                           &mut slider_y4).await {
                     match second_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from options page...");
@@ -106,16 +116,6 @@ pub async fn run() {
                     }
                 }
             }
-        }
-
-        if slider_x.current_value != slider_x_val {
-            println!("Slider X new val: {}", slider_x.current_value);
-            slider_x_val = slider_x.current_value;
-        }
-
-        if slider_y.current_value != slider_y_val {
-            println!("Slider y new val: {}", slider_y.current_value);
-            slider_y_val = slider_y.current_value;
         }
 
         next_frame().await;

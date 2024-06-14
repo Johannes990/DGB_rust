@@ -8,8 +8,14 @@ use crate::elements::slider::Slider;
 pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
                            settings_text_params: &TextParams<'a>,
                            settings_state: &mut DistributionSettings,
-                           slider_x: &mut Slider<'a>,
-                           slider_y: &mut Slider<'a>) -> Option<u8> {
+                           slider_x1: &mut Slider<'a>,
+                           slider_y1: &mut Slider<'a>,
+                           slider_x2: &mut Slider<'a>,
+                           slider_y2: &mut Slider<'a>,
+                           slider_x3: &mut Slider<'a>,
+                           slider_y3: &mut Slider<'a>,
+                           slider_x4: &mut Slider<'a>,
+                           slider_y4: &mut Slider<'a>) -> Option<u8> {
     let scr_h = screen_height();
     let scr_w = screen_width();
     let button_w = scr_w / 4.0;
@@ -55,11 +61,22 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
         y1 += 30.0;
     }
 
-    slider_x.draw();
-    slider_y.draw();
-
-    slider_x.handle_input();
-    slider_y.handle_input();
+    slider_x1.draw();
+    slider_y1.draw();
+    slider_x2.draw();
+    slider_y2.draw();
+    slider_x3.draw();
+    slider_y3.draw();
+    slider_x4.draw();
+    slider_y4.draw();
+    slider_x1.handle_input();
+    slider_y1.handle_input();
+    slider_x2.handle_input();
+    slider_y2.handle_input();
+    slider_x3.handle_input();
+    slider_y3.handle_input();
+    slider_x4.handle_input();
+    slider_y4.handle_input();
 
     if back_button.is_pressed() {
         return Some(1);

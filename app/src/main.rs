@@ -3,8 +3,8 @@ use display;
 fn window_conf() -> macroquad::prelude::Conf {
     macroquad::prelude::Conf {
         window_title: "Dynamic Graph Builder".to_owned(),
-        window_height: 500,
-        window_width: 500,
+        window_height: 600,
+        window_width: 700,
         high_dpi: false,
         window_resizable: true,
         fullscreen: false,
