@@ -1,8 +1,8 @@
 use std::fmt::Debug;
 use macroquad::prelude::*;
 
-#[derive(PartialOrd, PartialEq)]
-pub struct Slider {
+
+pub struct Slider<'a> {
     pub x: f32,
     pub y: f32,
     pub width: f32,
@@ -12,17 +12,19 @@ pub struct Slider {
     pub current_value: f32,
     pub is_dragging: bool,
     pub slider_type: SliderType,
+    pub label: String,
+    pub text_params: TextParams<'a>
 }
 
-#[derive(PartialEq, PartialOrd)]
+
 pub enum SliderType {
     Vertical,
     Horizontal,
 }
 
-impl Slider{
-    pub fn new(x: f32, y: f32, width: f32, height: f32, min_value: f32, max_value: f32, initial_value: f32, slider_type: SliderType) -> Self {
-        Self { x, y, width, height, min_value, max_value, current_value: initial_value, is_dragging: false, slider_type}
+impl<'a> Slider<'a> {
+    pub fn new(x: f32, y: f32, width: f32, height: f32, min_value: f32, max_value: f32, initial_value: f32, slider_type: SliderType, label: &str, text_params: &TextParams<'a>) -> Self {
+        Self { x, y, width, height, min_value, max_value, current_value: initial_value, is_dragging: false, slider_type, label: label.to_string(), text_params: text_params.clone() }
     }
 
     pub fn draw(&self) {
@@ -33,6 +35,7 @@ impl Slider{
                 // Draw the slider knob
                 let knob_x = self.x + (self.current_value - self.min_value) / (self.max_value - self.min_value) * self.width;
                 draw_rectangle(knob_x - self.height / 2.0, self.y, self.height, self.height, BLUE);
+                draw_text_ex(&self.label, self.x, self.y - self.height / 2.0, self.text_params.clone());
             },
             SliderType::Vertical => {
                 todo!()

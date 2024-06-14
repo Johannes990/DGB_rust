@@ -5,18 +5,24 @@ mod first_page;
 mod options_page;
 mod elements;
 mod quit_page;
+
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};
 use settings::distribution_settings::DistributionSettings;
+use crate::elements::palette::{FONT_OPEN_SANS_BUTTON, FONT_OPEN_SANS_OPTIONS};
 use crate::elements::slider::{Slider, SliderType};
 
 pub async fn run() {
     let mut current_display = DisplayContext::new().unwrap();
-    let user_exit_requested = false;
     let mut settings_state = DistributionSettings::new();
-    let mut slider_x = Slider::new(25.0, 370.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal);
-    let mut slider_y = Slider::new(185.0, 370.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal);
+    let user_exit_requested = false;
 
+    let font = load_ttf_font("C:\\Users\\johan\\RustroverProjects\\DGB_rust\\assets\\fonts\\open_sans\\OpenSans_Medium.ttf").await.unwrap();
+    let button_text_params = TextParams { font: Some(&font), font_size: 20, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_BUTTON };
+    let option_text_params = TextParams { font: Some(&font), font_size: 18, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_OPTIONS };
+
+    let mut slider_x = Slider::new(25.0, 370.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 1", &option_text_params);
+    let mut slider_y = Slider::new(185.0, 370.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 1", &option_text_params);
     let mut slider_x_val = slider_x.current_value;
     let mut slider_y_val = slider_y.current_value;
 
@@ -25,7 +31,7 @@ pub async fn run() {
 
         match current_window {
             DisplayWindow::StartingPage => {
-                if let Some(start_page_element) = start_page::show_page().await {
+                if let Some(start_page_element) = start_page::show_page(&button_text_params).await {
                     match start_page_element {
                         1 => {
                             println!("Mouse selected BUTTON 1...");
@@ -47,7 +53,7 @@ pub async fn run() {
                 }
             },
             DisplayWindow::FirstPage => {
-                if let Some(first_page_element) = first_page::show_page(&settings_state).await {
+                if let Some(first_page_element) = first_page::show_page(&button_text_params, &settings_state).await {
                     match first_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from page one...");
@@ -64,7 +70,11 @@ pub async fn run() {
                 }
             },
             DisplayWindow::OptionsPage => {
-                if let Some(second_page_element) = options_page::show_page(&mut settings_state, &mut slider_x, &mut slider_y).await {
+                if let Some(second_page_element) = options_page::show_page(&button_text_params,
+                                                                           &option_text_params,
+                                                                           &mut settings_state,
+                                                                           &mut slider_x,
+                                                                           &mut slider_y).await {
                     match second_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from options page...");
@@ -81,7 +91,7 @@ pub async fn run() {
                 }
             },
             DisplayWindow::QuitDialogPage => {
-                if let Some(quit_page_element) = quit_page::show_page(&user_exit_requested).await {
+                if let Some(quit_page_element) = quit_page::show_page(&button_text_params, &user_exit_requested).await {
                     match quit_page_element {
                         0 => {
                             println!("QUITTING...");
