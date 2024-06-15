@@ -8,9 +8,12 @@ mod quit_page;
 
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};
+use distributions::distribution_class::DistributionClass;
+use distributions::distribution_type::DistributionType;
 use settings::distribution_settings::DistributionSettings;
 use crate::elements::palette::{FONT_OPEN_SANS_BUTTON, FONT_OPEN_SANS_OPTIONS};
 use crate::elements::slider::{Slider, SliderType};
+use crate::elements::selection_list::SelectionList;
 
 pub async fn run() {
     let mut current_display = DisplayContext::new().unwrap();
@@ -29,6 +32,12 @@ pub async fn run() {
     let mut slider_y3 = Slider::new(185.0, 470.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 3", &option_text_params);
     let mut slider_x4 = Slider::new(25.0, 530.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 4", &option_text_params);
     let mut slider_y4 = Slider::new(185.0, 530.0, 60.0, 20.0, 0.0, 10.0, 1.0, SliderType::Horizontal, "parameter 4", &option_text_params);
+    let mut distro:Vec<DistributionClass> = Vec::new();
+    distro.push(DistributionClass { payload: DistributionType::Cauchy, name: "Cauchy".to_string(), });
+    distro.push(DistributionClass { payload: DistributionType::Exponent, name: "Exponent".to_string(), });
+    distro.push(DistributionClass { payload: DistributionType::Gaussian, name: "Gaussian".to_string(), });
+    let mut checklist = SelectionList::new(450.0, 300.0, 20.0, distro, "Selection list".to_string(), WHITE, RED, &option_text_params);
+
 
     loop {
         let current_window = current_display.get_current_window();
@@ -84,7 +93,8 @@ pub async fn run() {
                                                                            &mut slider_x3,
                                                                            &mut slider_y3,
                                                                            &mut slider_x4,
-                                                                           &mut slider_y4).await {
+                                                                           &mut slider_y4,
+                                                                           &mut checklist).await {
                     match second_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from options page...");

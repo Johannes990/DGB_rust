@@ -2,8 +2,10 @@ use macroquad::math::{bool, f32};
 use macroquad::prelude::*;
 use crate::elements::button::Button;
 use crate::elements::palette;
-use settings::distribution_settings::{DistributionSettings, DistributionType};
+use settings::distribution_settings::DistributionSettings;
+use distributions::distribution_class::{DistributionClass, HasName};
 use crate::elements::slider::Slider;
+use crate::elements::selection_list::SelectionList;
 
 pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
                            settings_text_params: &TextParams<'a>,
@@ -15,7 +17,8 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
                            slider_x3: &mut Slider<'a>,
                            slider_y3: &mut Slider<'a>,
                            slider_x4: &mut Slider<'a>,
-                           slider_y4: &mut Slider<'a>) -> Option<u8> {
+                           slider_y4: &mut Slider<'a>,
+                           checklist: &mut SelectionList<'a, DistributionClass>) -> Option<u8> {
     let scr_h = screen_height();
     let scr_w = screen_width();
     let button_w = scr_w / 4.0;
@@ -25,40 +28,16 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
     let back_button = Button::new(button_w_pad, 0.0, button_w, button_h, palette::BACK_PAGE_BUTTON, "BACK", button_text_params);
     let quit_button = Button::new(button_w_pad + button_w, 0.0, button_w, button_h, palette::QUIT_DIALOG_BUTTON, "QUIT", button_text_params);
 
+
     clear_background(palette::GENERAL_BACKGROUND);
 
     back_button.draw();
     quit_button.draw();
 
-    // settings menu display here
-    draw_text_ex("X-axis", 20.0, 90.0, settings_text_params.clone());
-    let mut y1 = 110.0;
-    let distributions = [
-        (DistributionType::Gaussian, "Gaussian"),
-        (DistributionType::Beta, "Beta"),
-        (DistributionType::Uniform, "Uniform"),
-        (DistributionType::Exponent, "Exponent"),
-        (DistributionType::Gamma, "Gamma"),
-        (DistributionType::LogNormal, "LogNormal"),
-        (DistributionType::Cauchy, "Cauchy"),
-    ];
+    let selected_dist_class_option = checklist.selected.clone();
 
-    for (distribution_type, name) in distributions.iter() {
-        let selected_x = settings_state.x_axis_distribution == *distribution_type;
-        if draw_checkbox(&selected_x, name,  "X", 20.0, y1, settings_text_params.clone()) {
-            settings_state.x_axis_distribution = distribution_type.clone();
-        }
-        y1 += 30.0;
-    }
-
-    y1 = 110.0;
-    draw_text_ex("Y-axis", 180.0, 90.0, settings_text_params.clone());
-    for (distribution_type, name) in distributions.iter() {
-        let selected_y = settings_state.y_axis_distribution == *distribution_type;
-        if draw_checkbox(&selected_y, name, "Y", 180.0, y1, settings_text_params.clone()) {
-            settings_state.y_axis_distribution = distribution_type.clone();
-        }
-        y1 += 30.0;
+    if let Some(selected_dist_class) = selected_dist_class_option {
+        draw_text_ex(selected_dist_class.get_name(), 180.0, 90.0, settings_text_params.clone());
     }
 
     slider_x1.draw();
@@ -69,6 +48,7 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
     slider_y3.draw();
     slider_x4.draw();
     slider_y4.draw();
+    checklist.draw();
     slider_x1.handle_input();
     slider_y1.handle_input();
     slider_x2.handle_input();
@@ -77,6 +57,7 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
     slider_y3.handle_input();
     slider_x4.handle_input();
     slider_y4.handle_input();
+    checklist.handle_input();
 
     if back_button.is_pressed() {
         return Some(1);
@@ -89,12 +70,12 @@ pub async fn show_page<'a>(button_text_params: &TextParams<'a>,
     None
 }
 
-fn draw_checkbox<'a>(selected: &bool, label: &str, axis: &str, x: f32, y: f32, text_params: TextParams) -> bool {
+fn draw_checkbox<'a>(selected: &bool, label: &String, axis: &str, x: f32, y: f32, text_params: TextParams) -> bool {
     let size = 20.0;
     let (mouse_x, mouse_y) = mouse_position();
     let clicked = is_mouse_button_pressed(MouseButton::Left);
 
-    draw_text_ex(label, x + size + 10.0, y + size - 5.0, text_params.clone());
+    draw_text_ex(&*label, x + size + 10.0, y + size - 5.0, text_params.clone());
     draw_rectangle(x, y, size, size, WHITE);
     if *selected {
         draw_rectangle(x + 3.0, y + 3.0, size - 6.0, size - 6.0, RED);

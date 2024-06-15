@@ -52,6 +52,12 @@ pub fn right_mouse_click_in_area(x_start: f32, y_start: f32, x_end: f32, y_end: 
 fn mouse_click_in_area(button: MouseButton, x_start: f32, y_start: f32, x_end: f32, y_end: f32) -> bool {
     let clicked = is_mouse_button_pressed(button);
     let (mouse_x, mouse_y) = mouse_position();
+    let detected = clicked && mouse_x >= x_start && mouse_y >= y_start && mouse_x <= x_end && mouse_y <= y_end;
 
-    clicked && mouse_x >= x_start && mouse_y >= y_start && mouse_x <= x_end && mouse_y <= y_end
+    if detected {
+        println!("Detected mouse click in area: x <= {}, x >= {}, y <= {}, y >= {}", x_end, x_start, y_end, y_start);
+        println!("Click position x: {}, y: {}", mouse_x, mouse_y);
+    }
+
+    detected
 }
