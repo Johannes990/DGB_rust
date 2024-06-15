@@ -12,7 +12,7 @@ pub trait HasName {
 
 pub trait HasPayload {
     type Payload;
-    fn get_payload(&self) -> Self::Payload;
+    fn get_payload(&self) -> &Self::Payload;
 }
 
 impl HasName for DistributionClass {
