@@ -1,5 +1,4 @@
 use std::fmt::Debug;
-use egui::CursorIcon::Default;
 use macroquad::prelude::*;
 
 
