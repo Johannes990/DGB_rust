@@ -36,7 +36,7 @@ pub async fn run() {
     distro.push(DistributionClass { payload: DistributionType::Cauchy, name: "Cauchy".to_string(), });
     distro.push(DistributionClass { payload: DistributionType::Exponent, name: "Exponent".to_string(), });
     distro.push(DistributionClass { payload: DistributionType::Gaussian, name: "Gaussian".to_string(), });
-    let mut checklist = SelectionList::new(450.0, 300.0, 20.0, distro, "Selection list".to_string(), WHITE, RED, &option_text_params);
+    let mut checklist = SelectionList::new(450.0, 300.0, 20.0, distro, "Selection list".to_string(), &option_text_params);
 
 
     loop {

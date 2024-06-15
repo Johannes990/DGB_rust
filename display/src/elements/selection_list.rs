@@ -1,6 +1,7 @@
 use macroquad::prelude::*;
 use distributions::distribution_class::{HasName, HasPayload};
 use utilities::left_mouse_click_in_area;
+use crate::elements::palette::{SELECTION_LIST_BACKGROUND, SELECTION_LIST_CHECK};
 
 ///
 /// Custom checklist widget
@@ -14,8 +15,6 @@ pub struct SelectionList<'a, T: HasPayload + HasName + PartialEq + Clone> {
     pub contents: Vec<T>,
     pub selected: Option<T>,
     pub heading: String,
-    pub background_color: Color,
-    pub check_color: Color,
     pub text_params: &'a TextParams<'a>,
 }
 
@@ -25,10 +24,8 @@ impl<'a, T: HasPayload + HasName+ PartialEq + Clone> SelectionList<'a, T> {
                box_size: f32,
                contents: Vec<T>,
                heading: String,
-               background_color: Color,
-               check_color: Color,
                text_params: &'a TextParams<'a>) -> Self {
-        Self { x, y, box_size, contents: contents.clone(), selected: None, heading, background_color, check_color, text_params }
+        Self { x, y, box_size, contents: contents.clone(), selected: None, heading, text_params }
     }
 
     pub fn draw(&self) {
@@ -43,7 +40,7 @@ impl<'a, T: HasPayload + HasName+ PartialEq + Clone> SelectionList<'a, T> {
             let text_x = self.x + self.box_size + 5.0;
             let text_y_row = text_y + row_spacing;
             let selected_pad = 2.0;
-            draw_rectangle(self.x, checkbox_y, self.box_size, self.box_size, self.background_color);
+            draw_rectangle(self.x, checkbox_y, self.box_size, self.box_size, SELECTION_LIST_BACKGROUND);
 
             match &self.selected {
                 Some(selected) if selected.get_name() == content_line.get_name() => {
@@ -51,7 +48,7 @@ impl<'a, T: HasPayload + HasName+ PartialEq + Clone> SelectionList<'a, T> {
                                    checkbox_y + selected_pad,
                                    self.box_size - 2.0 * selected_pad,
                                    self.box_size - 2.0 * selected_pad,
-                                   self.check_color);
+                                   SELECTION_LIST_CHECK);
                 }
                 Some(_) => {
                     //println!("Something is selected but match does not know what!");
@@ -73,7 +70,6 @@ impl<'a, T: HasPayload + HasName+ PartialEq + Clone> SelectionList<'a, T> {
             let x_start = self.x;
             let y_start = self.y + row_spacing;
             if left_mouse_click_in_area(x_start, y_start, x_start + self.box_size, y_start + self.box_size) {
-                println!("Clicked!!!");
                 self.selected = Some(content_line.clone());
             }
         }

@@ -9,3 +9,5 @@ pub const QUIT_YES_BUTTON: Color = Color { r: 1.0, g: 0.0, b: 0.0, a: 1.0 };
 pub const QUIT_NO_BUTTON: Color = Color { r: 0.0, g: 1.0, b: 0.0, a: 1.0 };
 pub const FONT_OPEN_SANS_BUTTON: Color = Color { r: 0.0, g: 0.0, b: 0.0, a: 1.0 };
 pub const FONT_OPEN_SANS_OPTIONS: Color = Color { r: 0.99607, g: 0.9745, b:0.99, a: 1.0 };
+pub const SELECTION_LIST_BACKGROUND: Color = Color { r: 1.0, g: 1.0, b: 1.0, a: 1.0};
+pub const SELECTION_LIST_CHECK: Color = Color { r: 0.0, g: 0.0, b: 1.0, a: 1.0 };
