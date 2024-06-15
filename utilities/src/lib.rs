@@ -1,4 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
+use macroquad::input::{is_mouse_button_pressed, MouseButton};
+use macroquad::prelude::mouse_position;
 
 pub fn generate_seed() -> [u64; 2] {
     let start = SystemTime::now();
@@ -37,4 +39,19 @@ pub fn shift_f32_to_range(
     println!("Shifted {} to a new value of {}", sample, shifted_value);
 
     Ok(shifted_value)
+}
+
+pub fn left_mouse_click_in_area(x_start: f32, y_start: f32, x_end: f32, y_end: f32) -> bool {
+    mouse_click_in_area(MouseButton::Left, x_start, y_start, x_end, y_end)
+}
+
+pub fn right_mouse_click_in_area(x_start: f32, y_start: f32, x_end: f32, y_end: f32) -> bool {
+    mouse_click_in_area(MouseButton::Right, x_start, y_start, x_end, y_end)
+}
+
+fn mouse_click_in_area(button: MouseButton, x_start: f32, y_start: f32, x_end: f32, y_end: f32) -> bool {
+    let clicked = is_mouse_button_pressed(button);
+    let (mouse_x, mouse_y) = mouse_position();
+
+    clicked && mouse_x >= x_start && mouse_y >= y_start && mouse_x <= x_end && mouse_y <= y_end
 }
