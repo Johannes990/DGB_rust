@@ -1,3 +1,4 @@
+use macroquad::math::f32;
 use macroquad::prelude::*;
 use distributions::distribution_class::{HasName, HasPayload};
 use utilities::left_mouse_click_in_area;
@@ -15,16 +16,16 @@ pub struct SelectionList<'a, T: HasPayload + HasName + PartialEq + Clone> {
     pub contents: Vec<T>,
     pub selected: Option<T>,
     pub heading: String,
-    pub text_params: &'a TextParams<'a>,
+    pub text_params: TextParams<'a>,
 }
 
-impl<'a, T: HasPayload + HasName+ PartialEq + Clone> SelectionList<'a, T> {
+impl<'a, T: HasPayload + HasName + PartialEq + Clone> SelectionList<'a, T> {
     pub fn new(x: f32,
                y: f32,
                box_size: f32,
                contents: Vec<T>,
                heading: String,
-               text_params: &'a TextParams<'a>) -> Self {
+               text_params: TextParams<'a>) -> Self {
         Self { x, y, box_size, contents: contents.clone(), selected: None, heading, text_params }
     }
 

@@ -23,7 +23,16 @@ pub enum SliderType {
 }
 
 impl<'a> Slider<'a> {
-    pub fn new(x: f32, y: f32, width: f32, height: f32, min_value: f32, max_value: f32, initial_value: f32, slider_type: SliderType, label: &str, text_params: &TextParams<'a>) -> Self {
+    pub fn new(x: f32,
+               y: f32,
+               width: f32,
+               height: f32,
+               min_value: f32,
+               max_value: f32,
+               initial_value: f32,
+               slider_type: SliderType,
+               label: &str,
+               text_params: &TextParams<'a>) -> Self {
         Self { x, y, width, height, min_value, max_value, current_value: initial_value, is_dragging: false, slider_type, label: label.to_string(), text_params: text_params.clone() }
     }
 

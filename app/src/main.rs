@@ -1,6 +1,8 @@
 mod distribution_loader;
-use settings::distribution_settings::DistributionSettings;
+use macroquad::prelude::{load_ttf_font, TextParams};
 use display;
+use display::app_state::AppState;
+use display::elements::palette::{FONT_OPEN_SANS_BUTTON, FONT_OPEN_SANS_OPTIONS};
 
 fn window_conf() -> macroquad::prelude::Conf {
     macroquad::prelude::Conf {
@@ -18,7 +20,13 @@ fn window_conf() -> macroquad::prelude::Conf {
 
 #[macroquad::main(window_conf)]
 async fn main() {
-    display::run().await;
+
+    let font = load_ttf_font("C:\\Users\\johan\\RustroverProjects\\DGB_rust\\assets\\fonts\\open_sans\\OpenSans_Medium.ttf").await.unwrap();
+    let button_text_params = TextParams { font: Some(&font), font_size: 20, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_BUTTON };
+    let option_text_params = TextParams { font: Some(&font), font_size: 18, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_OPTIONS };
+    let mut app_state = AppState::new(option_text_params.clone()).await;
+
+    display::run(&mut app_state, &button_text_params).await;
     /*let mut x_values:Vec<f32> = vec![250.0];
     let seed = generate_seed();
     let mut source = Xorshift128Plus::new(seed);
