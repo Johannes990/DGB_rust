@@ -2,7 +2,7 @@ mod distribution_loader;
 use macroquad::prelude::{load_ttf_font, TextParams};
 use display;
 use display::app_state::AppState;
-use display::constants_and_values::palette::{FONT_OPEN_SANS_BUTTON, FONT_OPEN_SANS_OPTIONS};
+use display::values_and_constants::palette::{FONT_OPEN_SANS_BUTTON, FONT_OPEN_SANS_OPTIONS};
 
 fn window_conf() -> macroquad::prelude::Conf {
     macroquad::prelude::Conf {

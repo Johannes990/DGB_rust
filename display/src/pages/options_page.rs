@@ -1,17 +1,24 @@
 use macroquad::prelude::*;
 use crate::widgets::button::Button;
-use crate::constants_and_values::palette;
+use crate::values_and_constants::palette;
 use crate::app_state::AppState;
+use crate::values_and_constants::context_button_display_params::ContextButtonDisplayParams;
 
-pub async fn show_page<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextParams<'a>) -> Option<u8> {
-    let scr_h = screen_height();
-    let scr_w = screen_width();
-    let button_w = scr_w / 4.0;
-    let button_h = 60.0;
-    let button_w_pad = scr_w - (2.0 * button_w);
-
-    let back_button = Button::new(button_w_pad, 0.0, button_w, button_h, palette::BACK_PAGE_BUTTON, "BACK", button_text_params);
-    let quit_button = Button::new(button_w_pad + button_w, 0.0, button_w, button_h, palette::QUIT_DIALOG_BUTTON, "QUIT", button_text_params);
+pub async fn show_page<'a>(app_state: &mut AppState<'a>, button_display_params: &ContextButtonDisplayParams, button_text_params: &'a TextParams<'a>) -> Option<u8> {
+        let back_button = Button::new(button_display_params.context_back_x,
+                                      button_display_params.context_back_y,
+                                      button_display_params.context_button_width,
+                                      button_display_params.context_button_height,
+                                      palette::BACK_PAGE_BUTTON,
+                                      "BACK",
+                                      button_text_params);
+    let quit_button = Button::new(button_display_params.context_quit_x,
+                                  button_display_params.context_quit_y,
+                                  button_display_params.context_button_width,
+                                  button_display_params.context_button_height,
+                                  palette::QUIT_DIALOG_BUTTON,
+                                  "QUIT",
+                                  button_text_params);
 
     clear_background(palette::GENERAL_BACKGROUND);
 

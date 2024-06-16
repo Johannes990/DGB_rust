@@ -2,15 +2,16 @@ mod display_context;
 pub mod widgets;
 pub mod app_state;
 mod pages;
-pub mod constants_and_values;
-
+pub mod values_and_constants;
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};
 use crate::app_state::AppState;
 use crate::pages::{quit_page, first_page, start_page, options_page};
+use crate::values_and_constants::context_button_display_params::ContextButtonDisplayParams;
 
 pub async fn run<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextParams<'a>) {
     let mut current_display = DisplayContext::new().unwrap();
+    let mut context_button_display_params = ContextButtonDisplayParams::new();
 
     loop {
         let current_window = current_display.get_current_window();
@@ -39,7 +40,7 @@ pub async fn run<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextP
                 }
             },
             DisplayWindow::FirstPage => {
-                if let Some(first_page_element) = first_page::show_page(button_text_params).await {
+                if let Some(first_page_element) = first_page::show_page(&context_button_display_params, button_text_params).await {
                     match first_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from page one...");
@@ -56,7 +57,7 @@ pub async fn run<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextP
                 }
             },
             DisplayWindow::OptionsPage => {
-                if let Some(second_page_element) = options_page::show_page(app_state, button_text_params).await {
+                if let Some(second_page_element) = options_page::show_page(app_state, &context_button_display_params, button_text_params).await {
                     match second_page_element {
                         1 => {
                             println!("BACK BUTTON pressed from options page...");
@@ -73,7 +74,7 @@ pub async fn run<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextP
                 }
             },
             DisplayWindow::QuitDialogPage => {
-                if let Some(quit_page_element) = quit_page::show_page(app_state, button_text_params).await {
+                if let Some(quit_page_element) = quit_page::show_page(app_state, &context_button_display_params, button_text_params).await {
                     match quit_page_element {
                         0 => {
                             println!("QUITTING...");
