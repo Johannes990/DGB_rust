@@ -25,20 +25,10 @@ pub async fn show_page<'a>(app_state: &mut AppState<'a>, button_display_params: 
     back_button.draw();
     quit_button.draw();
 
-    &app_state.x_axis_distribution_list.draw();
-    &app_state.y_axis_distribution_list.draw();
-    &app_state.x_axis_distribution_list.handle_input();
-    &app_state.y_axis_distribution_list.handle_input();
-
-
-
-    /*
-    let selected_dist_class_option = checklist.selected.clone();
-
-    if let Some(selected_dist_class) = selected_dist_class_option {
-        draw_text_ex(selected_dist_class.get_name(), 180.0, 90.0, settings_text_params.clone());
-    }
-     */
+    &app_state.x_axis_distribution.draw();
+    &app_state.y_axis_distribution.draw();
+    &app_state.x_axis_distribution.handle_input();
+    &app_state.y_axis_distribution.handle_input();
 
     if back_button.is_pressed() {
         return Some(1);

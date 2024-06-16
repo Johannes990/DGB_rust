@@ -14,9 +14,11 @@ pub struct SelectionList<'a, T: HasPayload + HasName + PartialEq + Clone> {
     pub y: f32,
     pub box_size: f32,
     pub contents: Vec<T>,
-    pub selected: Option<T>,
+    pub selected: T,
     pub heading: String,
     pub text_params: TextParams<'a>,
+    y_spacing: f32,
+    text_y: f32,
 }
 
 impl<'a, T: HasPayload + HasName + PartialEq + Clone> SelectionList<'a, T> {
@@ -26,36 +28,32 @@ impl<'a, T: HasPayload + HasName + PartialEq + Clone> SelectionList<'a, T> {
                contents: Vec<T>,
                heading: String,
                text_params: TextParams<'a>) -> Self {
-        Self { x, y, box_size, contents: contents.clone(), selected: None, heading, text_params }
+        Self { x, y, box_size, contents: contents.clone(), selected: contents.get(0).unwrap().clone(), heading, text_params, y_spacing: 30.0 , text_y: 0.0 }
     }
 
-    pub fn draw(&self) {
-        let y_spacing = 30.0;
+    pub fn draw(&mut self) {
         let font_height = measure_text(&*self.heading, self.text_params.font, self.text_params.font_size, self.text_params.font_scale).height;
-        let text_y = self.y + font_height + 3.0;
-        draw_text_ex(&self.heading, self.x, text_y, self.text_params.clone());
+        self.text_y = self.y + font_height + 3.0;
+        draw_text_ex(&self.heading, self.x, self.text_y, self.text_params.clone());
 
         for (i, content_line) in self.contents.iter().enumerate() {
-            let row_spacing = y_spacing * (i as f32 + 1.0);
+            let row_spacing = self.y_spacing * (i as f32 + 1.0);
             let checkbox_y = self.y + row_spacing;
             let text_x = self.x + self.box_size + 5.0;
-            let text_y_row = text_y + row_spacing;
+            let text_y_row = self.text_y + row_spacing;
             let selected_pad = 2.0;
             draw_rectangle(self.x, checkbox_y, self.box_size, self.box_size, SELECTION_LIST_BACKGROUND);
 
             match &self.selected {
-                Some(selected) if selected.get_name() == content_line.get_name() => {
+                selected if selected.get_name() == content_line.get_name() => {
                     draw_rectangle(self.x + selected_pad,
                                    checkbox_y + selected_pad,
                                    self.box_size - 2.0 * selected_pad,
                                    self.box_size - 2.0 * selected_pad,
                                    SELECTION_LIST_CHECK);
                 }
-                Some(_) => {
+                _ => {
                     //println!("Something is selected but match does not know what!");
-                },
-                None => {
-                    //println!("Nothing is selected!");
                 },
             }
 
@@ -71,8 +69,12 @@ impl<'a, T: HasPayload + HasName + PartialEq + Clone> SelectionList<'a, T> {
             let x_start = self.x;
             let y_start = self.y + row_spacing;
             if left_mouse_click_in_area(x_start, y_start, x_start + self.box_size, y_start + self.box_size) {
-                self.selected = Some(content_line.clone());
+                self.selected = content_line.clone();
             }
         }
+    }
+
+    pub fn get_height(&self) -> f32 {
+        self.text_y + (self.contents.len() as f32) * self.box_size
     }
 }
