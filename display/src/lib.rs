@@ -18,7 +18,7 @@ pub async fn run<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextP
 
         match current_window {
             DisplayWindow::StartingPage => {
-                if let Some(start_page_element) = start_page::show_page(button_text_params).await {
+                if let Some(start_page_element) = start_page::show_page(&context_button_display_params, button_text_params).await {
                     match start_page_element {
                         1 => {
                             println!("Mouse selected BUTTON 1...");
