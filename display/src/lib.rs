@@ -2,6 +2,7 @@ mod display_context;
 pub mod widgets;
 pub mod app_state;
 mod pages;
+pub mod constants_and_values;
 
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};

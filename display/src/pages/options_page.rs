@@ -1,6 +1,6 @@
 use macroquad::prelude::*;
 use crate::widgets::button::Button;
-use crate::widgets::palette;
+use crate::constants_and_values::palette;
 use crate::app_state::AppState;
 
 pub async fn show_page<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextParams<'a>) -> Option<u8> {
