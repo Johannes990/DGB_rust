@@ -1,6 +1,6 @@
 use macroquad::prelude::*;
-use crate::elements::button::Button;
-use crate::elements::palette;
+use crate::widgets::button::Button;
+use crate::widgets::palette;
 
 pub async fn show_page<'a>(button_text_params: &'a TextParams<'a>) -> Option<u8> {
     let scr_h = screen_height();

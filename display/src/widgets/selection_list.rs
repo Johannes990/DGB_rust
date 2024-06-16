@@ -2,7 +2,7 @@ use macroquad::math::f32;
 use macroquad::prelude::*;
 use distributions::distribution_class::{HasName, HasPayload};
 use utilities::left_mouse_click_in_area;
-use crate::elements::palette::{SELECTION_LIST_BACKGROUND, SELECTION_LIST_CHECK};
+use crate::widgets::palette::{SELECTION_LIST_BACKGROUND, SELECTION_LIST_CHECK};
 
 ///
 /// Custom checklist widget

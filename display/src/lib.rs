@@ -2,7 +2,7 @@ mod start_page;
 mod display_context;
 mod first_page;
 mod options_page;
-pub mod elements;
+pub mod widgets;
 mod quit_page;
 pub mod app_state;
 use macroquad::prelude::*;

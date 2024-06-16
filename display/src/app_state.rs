@@ -1,7 +1,7 @@
 use macroquad::prelude::TextParams;
 use distributions::distribution_class::DistributionClass;
 use settings::distribution_settings::DistributionSettings;
-use crate::elements::{slider::Slider, slider::SliderType, selection_list::SelectionList};
+use crate::widgets::{slider::Slider, slider::SliderType, selection_list::SelectionList};
 use distributions::distribution_type::DistributionType;
 
 pub struct AppState<'a> {
