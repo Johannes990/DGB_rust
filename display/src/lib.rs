@@ -1,13 +1,12 @@
-mod start_page;
 mod display_context;
-mod first_page;
-mod options_page;
 pub mod widgets;
-mod quit_page;
 pub mod app_state;
+mod pages;
+
 use macroquad::prelude::*;
 use display_context::{DisplayContext, DisplayWindow};
 use crate::app_state::AppState;
+use crate::pages::{quit_page, first_page, start_page, options_page};
 
 pub async fn run<'a>(app_state: &mut AppState<'a>, button_text_params: &'a TextParams<'a>) {
     let mut current_display = DisplayContext::new().unwrap();
