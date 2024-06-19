@@ -25,10 +25,10 @@ pub async fn show_page<'a>(app_state: &mut AppState<'a>, button_display_params: 
     back_button.draw();
     quit_button.draw();
 
-    &app_state.x_axis_distribution.draw();
-    &app_state.y_axis_distribution.draw();
-    &app_state.x_axis_distribution.handle_input();
-    &app_state.y_axis_distribution.handle_input();
+    &app_state.x_axis_distribution_selector.draw();
+    &app_state.y_axis_distribution_selector.draw();
+    &app_state.x_axis_distribution_selector.handle_input();
+    &app_state.y_axis_distribution_selector.handle_input();
 
     if back_button.is_pressed() {
         return Some(1);

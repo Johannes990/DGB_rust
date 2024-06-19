@@ -3,6 +3,7 @@ use macroquad::prelude::{load_ttf_font, TextParams};
 use display;
 use display::app_state::AppState;
 use display::values_and_constants::palette::{FONT_OPEN_SANS_BUTTON, FONT_OPEN_SANS_OPTIONS};
+use crate::distribution_loader::DistributionLoader;
 
 fn window_conf() -> macroquad::prelude::Conf {
     macroquad::prelude::Conf {
@@ -25,6 +26,7 @@ async fn main() {
     let button_text_params = TextParams { font: Some(&font), font_size: 20, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_BUTTON };
     let option_text_params = TextParams { font: Some(&font), font_size: 18, font_scale: 1.0, font_scale_aspect: 1.0, rotation: 0.0, color: FONT_OPEN_SANS_OPTIONS };
     let mut app_state = AppState::new(option_text_params.clone()).await;
+    let mut distribution_loader = DistributionLoader::new(&app_state);
 
     display::run(&mut app_state, &button_text_params).await;
     /*let mut x_values:Vec<f32> = vec![250.0];
