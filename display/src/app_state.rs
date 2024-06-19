@@ -15,16 +15,16 @@ impl<'a> AppState<'a> {
 
         // distributions
         let mut distributions = Vec::new();
-        distributions.push(DistributionClass::new(DistributionType::Beta, "Beta", vec![0.0, 0.0, -graph_axis_max_value, -graph_axis_max_value], vec![10.0, 10.0, graph_axis_max_value, graph_axis_max_value]));
-        distributions.push(DistributionClass::new(DistributionType::Cauchy, "Cauchy", vec![-graph_axis_max_value, 0.0], vec![graph_axis_max_value, 50.0]));
+        distributions.push(DistributionClass::new(DistributionType::Beta, "Beta", vec![0.001, 0.001, -graph_axis_max_value, -graph_axis_max_value], vec![10.0, 10.0, graph_axis_max_value, graph_axis_max_value]));
+        distributions.push(DistributionClass::new(DistributionType::Cauchy, "Cauchy", vec![-graph_axis_max_value, 0.001], vec![graph_axis_max_value, 50.0]));
         distributions.push(DistributionClass::new(DistributionType::Exponent, "Exponent", vec![0.0], vec![10.0]));
-        distributions.push(DistributionClass::new(DistributionType::Gamma, "Gamma", vec![0.0, 0.0], vec![50.0, 50.0]));
+        distributions.push(DistributionClass::new(DistributionType::Gamma, "Gamma", vec![0.001, 0.001], vec![50.0, 50.0]));
         distributions.push(DistributionClass::new(DistributionType::Gaussian, "Gaussian", vec![-graph_axis_max_value, -graph_axis_max_value], vec![graph_axis_max_value, graph_axis_max_value]));
-        distributions.push(DistributionClass::new(DistributionType::LogNormal, "LogNormal", vec![-graph_axis_max_value, 0.0], vec![graph_axis_max_value, 5.0]));
+        distributions.push(DistributionClass::new(DistributionType::LogNormal, "LogNormal", vec![-graph_axis_max_value, 0.001], vec![graph_axis_max_value, 5.0]));
         distributions.push(DistributionClass::new(DistributionType::Uniform, "Uniform", vec![-graph_axis_max_value, -graph_axis_max_value], vec![graph_axis_max_value, graph_axis_max_value]));
 
-        let x_axis_distribution = DistributionSelectionWidget::new(20.0, 20.0, 20.0, distributions.clone(), "X axis", &option_text_params);
-        let y_axis_distribution = DistributionSelectionWidget::new(220.0, 20.0, 20.0, distributions, "Y axis", &option_text_params);
+        let x_axis_distribution = DistributionSelectionWidget::new(20.0, 20.0, 20.0, distributions.clone(), "X axis", &option_text_params, 0.01);
+        let y_axis_distribution = DistributionSelectionWidget::new(220.0, 20.0, 20.0, distributions, "Y axis", &option_text_params, 0.01);
 
         Self {
             x_axis_distribution_selector: x_axis_distribution,

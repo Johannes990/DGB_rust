@@ -44,8 +44,11 @@ impl<'a> DistributionLoader<'a> {
                 GaussianDistribution::new(parameter_values[0] as f64, parameter_values[1] as f64).expect("Can't create and return Gaussian distribution!");
             }
             DistributionType::Beta => {
+                println!("beta param values");
+                let alpha = parameter_values[0];
+                let beta = parameter_values[1];
+                println!("alpha: {}, beta: {}", alpha, beta);
                 BetaDistribution::new(parameter_values[0] as f64, parameter_values[1] as f64, parameter_values[2] as f64, parameter_values[3] as f64).expect("Can't create and return Beta distribution!");
-
             }
             DistributionType::Uniform => {
                 UniformDistribution::new(parameter_values[0] as f64, parameter_values[1] as f64).expect("Can't create and return Uniform distribution!");

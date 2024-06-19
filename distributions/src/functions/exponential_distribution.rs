@@ -7,7 +7,7 @@ pub struct ExponentialDistribution {
 
 impl ExponentialDistribution {
     pub fn new(lambda: f64) -> Result<ExponentialDistribution, String> {
-        if lambda <= 0.0 {
+        if lambda < 0.0 {
             return Err("Lambda should be a non-negative real-valued number.".to_string())
         }
         let exp = Exponential::new(lambda);

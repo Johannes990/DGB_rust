@@ -28,6 +28,9 @@ async fn main() {
     let mut app_state = AppState::new(option_text_params.clone()).await;
     let mut distribution_loader = DistributionLoader::new(&app_state);
 
+    let x_ax_dist = distribution_loader.get_x_axis_distribution(&app_state);
+    let y_ax_dist = distribution_loader.get_y_axis_distribution(&app_state);
+
     display::run(&mut app_state, &button_text_params).await;
     /*let mut x_values:Vec<f32> = vec![250.0];
     let seed = generate_seed();

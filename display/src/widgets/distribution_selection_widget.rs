@@ -13,6 +13,7 @@ pub struct DistributionSelectionWidget<'a> {
     pub parameter_sliders: Vec<Slider<'a>>,
     pub previous_selected_type: Option<DistributionType>,
     pub slider_values: HashMap<DistributionType, Vec<f32>>,
+    pub default_slider_value: f32,
 }
 
 impl<'a> DistributionSelectionWidget<'a> {
@@ -21,26 +22,35 @@ impl<'a> DistributionSelectionWidget<'a> {
                box_size: f32,
                contents: Vec<DistributionClass<'a>>,
                heading: &'a str,
-               option_text_params: &TextParams<'a>) -> Self {
+               option_text_params: &TextParams<'a>,
+               default_slider_value: f32) -> Self {
         let selection_list = SelectionList::new(x, y, box_size, contents, heading, option_text_params.clone());
         let slider_y = y + selection_list.get_height() + 68.0;
         println!("slider_y: {}, self.y: {}, sel_list.get_height: {}", slider_y, y, selection_list.get_height());
         let mut slider_values = HashMap::new();
 
+        let mut i = 0.01;
         for distribution_class in &selection_list.contents {
             let parameter_count = Self::get_parameter_count(&distribution_class.get_payload());
-            slider_values.insert(distribution_class.get_payload().clone(), vec![0.0; parameter_count]);
+            let mut initial_vals = Vec::new();
+
+            for j in 0..parameter_count {
+                initial_vals.push(j as f32 * 0.01 + 0.001);
+            }
+
+            slider_values.insert(distribution_class.get_payload().clone(), initial_vals);
         }
 
-        let parameter_sliders = Self::create_sliders(&selection_list.selected, slider_y, x, option_text_params);
+        let parameter_sliders = Self::create_sliders(&selection_list.selected, slider_y, x, option_text_params, default_slider_value);
 
-        Self { x, y, heading, selection_list, parameter_sliders, previous_selected_type: None, slider_values }
+        Self { x, y, heading, selection_list, parameter_sliders, previous_selected_type: None, slider_values, default_slider_value }
     }
 
     fn create_sliders(distribution_class: &DistributionClass,
                       slider_y: f32,
                       x: f32,
-                      option_text_params: &TextParams<'a>) -> Vec<Slider<'a>> {
+                      option_text_params: &TextParams<'a>,
+                      default_slider_value: f32) -> Vec<Slider<'a>> {
         let param_names: Vec<&str> = match distribution_class.get_payload() {
             DistributionType::Gaussian => vec!["mean", "std_dev"], // both in the range of the graph + and -
             DistributionType::Beta => vec!["alpha", "beta", "a", "b"], // alpha beta both max 10.0 seems reasonable
@@ -61,7 +71,7 @@ impl<'a> DistributionSelectionWidget<'a> {
                 knob_size,
                 distribution_class.min_values[i],
                 distribution_class.max_values[i],
-                0.0,
+                default_slider_value,
                 SliderType::Horizontal,
                 name,
                 &option_text_params
@@ -109,7 +119,8 @@ impl<'a> DistributionSelectionWidget<'a> {
                 &new_selected_distribution,
                 slider_y,
                 self.x,
-                &self.selection_list.text_params
+                &self.selection_list.text_params,
+                self.default_slider_value
             );
 
             if let Some(slider_values) = self.slider_values.get(&new_selected_distribution.get_payload()) {
