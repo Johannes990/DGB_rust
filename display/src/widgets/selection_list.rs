@@ -15,7 +15,7 @@ pub struct SelectionList<'a, T: HasPayload + HasName + PartialEq + Clone> {
     pub box_size: f32,
     pub contents: Vec<T>,
     pub selected: T,
-    pub heading: String,
+    pub heading: &'a str,
     pub text_params: TextParams<'a>,
     y_spacing: f32,
     text_y: f32,
@@ -26,7 +26,7 @@ impl<'a, T: HasPayload + HasName + PartialEq + Clone> SelectionList<'a, T> {
                y: f32,
                box_size: f32,
                contents: Vec<T>,
-               heading: String,
+               heading: &'a str,
                text_params: TextParams<'a>) -> Self {
         Self { x, y, box_size, contents: contents.clone(), selected: contents.get(0).unwrap().clone(), heading, text_params, y_spacing: 30.0 , text_y: 0.0 }
     }
@@ -75,6 +75,6 @@ impl<'a, T: HasPayload + HasName + PartialEq + Clone> SelectionList<'a, T> {
     }
 
     pub fn get_height(&self) -> f32 {
-        self.text_y + (self.contents.len() as f32) * self.box_size
+        self.text_y + (3.0 + self.contents.len() as f32) * self.box_size
     }
 }
