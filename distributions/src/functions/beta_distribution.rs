@@ -19,6 +19,7 @@ impl BetaDistribution {
         if a >= b {
             return Err("B must be greater than a.".to_string())
         }
+
         let beta_dist = Beta::new(alpha, beta, a, b);
 
         Ok( BetaDistribution{ alpha, beta, a, b, dist: beta_dist })

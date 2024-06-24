@@ -25,17 +25,16 @@ impl<'a> DistributionSelectionWidget<'a> {
                option_text_params: &TextParams<'a>,
                default_slider_value: f32) -> Self {
         let selection_list = SelectionList::new(x, y, box_size, contents, heading, option_text_params.clone());
-        let slider_y = y + selection_list.get_height() + 68.0;
+        let slider_y = y + selection_list.get_height() + 68.0; // 68.0 is to get good visual alignment
         println!("slider_y: {}, self.y: {}, sel_list.get_height: {}", slider_y, y, selection_list.get_height());
         let mut slider_values = HashMap::new();
 
-        let mut i = 0.01;
         for distribution_class in &selection_list.contents {
             let parameter_count = Self::get_parameter_count(&distribution_class.get_payload());
             let mut initial_vals = Vec::new();
 
             for j in 0..parameter_count {
-                initial_vals.push(j as f32 * 0.01 + 0.001);
+                initial_vals.push(j as f32 * 0.01 + 0.001); // some distribution parameters have to be above zero and also can't be equal to each other
             }
 
             slider_values.insert(distribution_class.get_payload().clone(), initial_vals);
@@ -52,10 +51,10 @@ impl<'a> DistributionSelectionWidget<'a> {
                       option_text_params: &TextParams<'a>,
                       default_slider_value: f32) -> Vec<Slider<'a>> {
         let param_names: Vec<&str> = match distribution_class.get_payload() {
-            DistributionType::Gaussian => vec!["mean", "std_dev"], // both in the range of the graph + and -
-            DistributionType::Beta => vec!["alpha", "beta", "a", "b"], // alpha beta both max 10.0 seems reasonable
-            DistributionType::Uniform => vec!["a", "b"], // up to graph range for both a and b
-            DistributionType::Exponent => vec!["lambda"], // lambda up to 10.0 max
+            DistributionType::Gaussian => vec!["mean", "std_dev"],
+            DistributionType::Beta => vec!["alpha", "beta", "a", "b"],
+            DistributionType::Uniform => vec!["a", "b"],
+            DistributionType::Exponent => vec!["lambda"],
             DistributionType::Gamma => vec!["k", "theta"],
             DistributionType::LogNormal => vec!["mu", "sigma"],
             DistributionType::Cauchy => vec!["mean", "gamma"],
@@ -63,7 +62,7 @@ impl<'a> DistributionSelectionWidget<'a> {
 
         param_names.iter().enumerate().map(|(i, &name)| {
             let knob_size = 20.0;
-            println!("Creating slider: {}, height: {}", i, slider_y + (i * 35) as f32);
+
             Slider::new(
                 x + 0.5 * knob_size,
                 slider_y + (i * 55) as f32,
@@ -93,6 +92,7 @@ impl<'a> DistributionSelectionWidget<'a> {
 
     pub fn draw(&mut self) {
         self.selection_list.draw();
+
         for slider in &self.parameter_sliders {
             slider.draw();
         }
@@ -114,7 +114,7 @@ impl<'a> DistributionSelectionWidget<'a> {
 
         if new_selected_distribution != selected_distribution {
             let slider_y = self.y + self.selection_list.get_height() + 30.0;
-            println!("slider_y: {}, self.y: {}, sel_list.get_height: {}", slider_y, self.y, self.selection_list.get_height());
+
             self.parameter_sliders = Self::create_sliders(
                 &new_selected_distribution,
                 slider_y,
