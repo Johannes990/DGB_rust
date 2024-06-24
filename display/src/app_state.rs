@@ -13,7 +13,7 @@ impl<'a> AppState<'a> {
     pub async fn new(option_text_params: TextParams<'a>) -> Self {
         let graph_axis_max_value = 500.0;
 
-        let distributions = Self::distribution_initialization(graph_axis_max_value);
+        let distributions = Self::initialize_distribution_vector(graph_axis_max_value);
 
         let x_axis_distribution = DistributionSelectionWidget::new(20.0, 20.0, 20.0, distributions.clone(), "X axis", &option_text_params, 0.01);
         let y_axis_distribution = DistributionSelectionWidget::new(220.0, 20.0, 20.0, distributions.clone(), "Y axis", &option_text_params, 0.01);
@@ -25,7 +25,7 @@ impl<'a> AppState<'a> {
         }
     }
 
-    fn distribution_initialization(max_range: f32) -> Vec<DistributionClass<'a>> {
+    fn initialize_distribution_vector(max_range: f32) -> Vec<DistributionClass<'a>> {
         let mut distributions = Vec::new();
 
         distributions.push(DistributionClass::new(DistributionType::Beta, "Beta", vec![0.001, 0.001, -max_range, -max_range], vec![10.0, 10.0, max_range, max_range]));
